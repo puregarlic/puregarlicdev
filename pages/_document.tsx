@@ -15,9 +15,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <title>PureGarlic</title>
-        </Head>
+        <Head></Head>
         <body className="dark:bg-gray-900 dark:text-gray-200 transition-colors">
           <Main />
           <NextScript />

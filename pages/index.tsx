@@ -1,4 +1,5 @@
 import { gql } from "urql";
+import Head from "next/head";
 import Image from "next/image";
 import Script from "next/script";
 import useDarkMode from "use-dark-mode";
@@ -86,133 +87,143 @@ export default function Home(props: HomeProps) {
   );
 
   return (
-    <main className="container relative max-w-2xl px-4 mx-auto">
-      <Script
-        src="https://embed.twitch.tv/embed/v1.js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          new Twitch.Embed("twitch-embed", {
-            width: "100%",
-            height: 400,
-            channel: "graphitized",
-            layout: "video",
-          });
-        }}
-      />
-      <div className="flex justify-end py-8 lg:absolute lg:top-0 lg:left-full lg:px-4 lg:py-0 lg:block">
-        <div className="lg:fixed">
-          <button
-            className="px-3 py-2 text-sm font-bold text-gray-500 bg-gray-100 rounded hover:bg-gray-200 transition-colors active:outline dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
-            suppressHydrationWarning
-            onClick={darkMode.toggle}
-          >
-            {darkMode.value ? "Light Mode!" : "Dark Mode!"}
-          </button>
-        </div>
-      </div>
-      <section className="my-24">
-        <h3 className="mb-2 text-xl font-bold tracking-tight">
-          Nice to meet you!
-        </h3>
-        <h1 className="mb-8 text-6xl font-black tracking-tight">I'm Graham.</h1>
-        <p className="prose-lg">
-          I'm a software developer and a variety games streamer. If I'm not
-          playing Valorant, I'm probably learning about web technologies or
-          software reliability. Sometimes I write about products that catch my
-          interest.
-        </p>
-      </section>
-      <section className="my-24 grid sm:grid-cols-2 gap-4">
-        <section>
-          <h2 className="mb-4 text-3xl font-black tracking-tight">Projects</h2>
-          <div className="flex flex-wrap gap-4">
-            {props.projects.map((project) => (
-              <a
-                key={project.label}
-                className="px-3 py-2 font-bold text-green-700 bg-green-200 rounded transition-all hover:bg-green-300 dark:bg-green-800 dark:text-green-300 dark:hover:bg-green-700"
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {project.label}
-              </a>
-            ))}
-          </div>
-        </section>
-        <section>
-          <h2 className="mb-4 text-3xl font-black tracking-tight">Socials</h2>
-          <ul className="flex flex-wrap gap-4">
-            {socials.map((social) => (
-              <a
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-2 font-bold text-pink-700 bg-pink-200 rounded transition-all hover:bg-pink-300 dark:bg-pink-800 dark:text-pink-300 dark:hover:bg-pink-700"
-                key={social.label}
-              >
-                {social.label}
-              </a>
-            ))}
-          </ul>
-        </section>
-      </section>
-      <section className="my-24">
-        <h2 className="mb-4 text-3xl font-black tracking-tight">Twitch</h2>
-        <div
-          style={{
-            minHeight: 400,
-            width: "100%",
+    <>
+      <Head>
+        <title>PureGarlic</title>
+      </Head>
+      <main className="container relative max-w-2xl px-4 mx-auto">
+        <Script
+          src="https://embed.twitch.tv/embed/v1.js"
+          strategy="lazyOnload"
+          onLoad={() => {
+            new Twitch.Embed("twitch-embed", {
+              width: "100%",
+              height: 400,
+              channel: "graphitized",
+              layout: "video",
+            });
           }}
-          className="bg-black"
-          id="twitch-embed"
-        ></div>
-        <h3 className="mt-16 mb-4 text-lg font-black tracking-tight uppercase">
-          Recent Videos
-        </h3>
-        <section className="grid sm:grid-cols-2 gap-x-4 gap-y-8">
-          {props.videos.map((video) => {
-            function loader({ width }) {
-              return video.thumbnail_url
-                .replace("%{width}", `${Math.min(width, 1920)}`)
-                .replace(
-                  "%{height}",
-                  `${Math.min(Math.ceil((width / 16) * 9), 1080)}`
-                );
-            }
-
-            return (
-              <a
-                href={`https://twitch.tv/videos/${video.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={video.id}
-              >
-                <figure className="relative h-full">
-                  <p className="mb-1 text-sm font-thin tracking-wide text-gray-400">
-                    {formatDistanceToNow(parseISO(video.published_at))} ago
-                  </p>
-                  <div className="aspect-w-16 aspect-h-9">
-                    <Image
-                      src="thumbnail.png"
-                      loader={loader}
-                      layout="fill"
-                      placeholder="blur"
-                      blurDataURL={video.blurred_thumbnail}
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <figcaption className="flex flex-col justify-between">
-                    <h4 className="mt-2 font-bold leading-snug tracking-tight">
-                      {video.title}
-                    </h4>
-                  </figcaption>
-                </figure>
-              </a>
-            );
-          })}
+        />
+        <div className="flex justify-end py-8 lg:absolute lg:top-0 lg:left-full lg:px-4 lg:py-0 lg:block">
+          <div className="lg:fixed">
+            <button
+              className="px-3 py-2 text-sm font-bold text-gray-500 bg-gray-100 rounded hover:bg-gray-200 transition-colors active:outline dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+              suppressHydrationWarning
+              onClick={darkMode.toggle}
+            >
+              {darkMode.value ? "Light Mode!" : "Dark Mode!"}
+            </button>
+          </div>
+        </div>
+        <section className="my-24">
+          <h3 className="mb-2 text-xl font-bold tracking-tight">
+            Nice to meet you!
+          </h3>
+          <h1 className="mb-8 text-6xl font-black tracking-tight">
+            I&apos;m Graham.
+          </h1>
+          <p className="prose-lg">
+            I&apos;m a software developer and a variety games streamer. If
+            I&apos;m not playing Valorant, I&apos;m probably learning about web
+            technologies or software reliability. Sometimes I write about
+            products that catch my interest.
+          </p>
         </section>
-      </section>
-    </main>
+        <section className="my-24 grid sm:grid-cols-2 gap-4">
+          <section>
+            <h2 className="mb-4 text-3xl font-black tracking-tight">
+              Projects
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {props.projects.map((project) => (
+                <a
+                  key={project.label}
+                  className="px-3 py-2 font-bold text-green-700 bg-green-200 rounded transition-all hover:bg-green-300 dark:bg-green-800 dark:text-green-300 dark:hover:bg-green-700"
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {project.label}
+                </a>
+              ))}
+            </div>
+          </section>
+          <section>
+            <h2 className="mb-4 text-3xl font-black tracking-tight">Socials</h2>
+            <ul className="flex flex-wrap gap-4">
+              {socials.map((social) => (
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 font-bold text-pink-700 bg-pink-200 rounded transition-all hover:bg-pink-300 dark:bg-pink-800 dark:text-pink-300 dark:hover:bg-pink-700"
+                  key={social.label}
+                >
+                  {social.label}
+                </a>
+              ))}
+            </ul>
+          </section>
+        </section>
+        <section className="my-24">
+          <h2 className="mb-4 text-3xl font-black tracking-tight">Twitch</h2>
+          <div
+            style={{
+              minHeight: 400,
+              width: "100%",
+            }}
+            className="bg-black"
+            id="twitch-embed"
+          ></div>
+          <h3 className="mt-16 mb-4 text-lg font-black tracking-tight uppercase">
+            Recent Videos
+          </h3>
+          <section className="grid sm:grid-cols-2 gap-x-4 gap-y-8">
+            {props.videos.map((video) => {
+              function loader({ width }) {
+                return video.thumbnail_url
+                  .replace("%{width}", `${Math.min(width, 1920)}`)
+                  .replace(
+                    "%{height}",
+                    `${Math.min(Math.ceil((width / 16) * 9), 1080)}`
+                  );
+              }
+
+              return (
+                <a
+                  href={`https://twitch.tv/videos/${video.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={video.id}
+                >
+                  <figure className="relative h-full">
+                    <p className="mb-1 text-sm font-thin tracking-wide text-gray-400">
+                      {formatDistanceToNow(parseISO(video.published_at))} ago
+                    </p>
+                    <div className="aspect-w-16 aspect-h-9">
+                      <Image
+                        src="thumbnail.png"
+                        loader={loader}
+                        alt={video.description}
+                        layout="fill"
+                        placeholder="blur"
+                        blurDataURL={video.blurred_thumbnail}
+                        className="w-full h-full"
+                      />
+                    </div>
+                    <figcaption className="flex flex-col justify-between">
+                      <h4 className="mt-2 font-bold leading-snug tracking-tight">
+                        {video.title}
+                      </h4>
+                    </figcaption>
+                  </figure>
+                </a>
+              );
+            })}
+          </section>
+        </section>
+      </main>
+    </>
   );
 }
 
